@@ -39,14 +39,19 @@
             box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
         }
 
-        #authScreen {
+        #authScreen, #gameViewScreen {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 85vh;
             text-align: center;
-            padding: 20px;
+            padding: 10px;
+        }
+
+        #gameViewScreen {
+            display: none;
+            justify-content: flex-start;
         }
 
         .welcome-title {
@@ -100,7 +105,6 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
-        /* Smooth Marquee Banner */
         .marquee-box {
             background: linear-gradient(135deg, #d97706, #b45309);
             color: white;
@@ -131,6 +135,8 @@
             font-weight: 700;
             margin-bottom: 12px;
             color: var(--text-main);
+            text-align: left;
+            width: 100%;
         }
 
         .game-grid {
@@ -148,6 +154,12 @@
             text-align: center;
             padding-bottom: 12px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .game-card:active {
+            transform: scale(0.96);
         }
 
         .game-img {
@@ -171,6 +183,8 @@
 
         .form-group {
             margin-bottom: 14px;
+            text-align: left;
+            width: 100%;
         }
 
         .form-label {
@@ -181,7 +195,7 @@
             display: block;
         }
 
-        .input-field, .select-box {
+        .input-field {
             width: 100%;
             padding: 12px 14px;
             background: #0f172a;
@@ -208,33 +222,53 @@
             margin-top: 10px;
         }
 
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-            justify-content: center;
-            align-items: center;
-            padding: 16px;
-            box-sizing: border-box;
-            z-index: 1000;
-            overflow-y: auto;
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            width: 100%;
+            margin-bottom: 16px;
         }
 
-        .modal-content {
-            background: #1e293b;
-            width: 100%;
-            max-width: 380px;
-            padding: 20px;
-            border-radius: 20px;
+        .pkg-btn {
+            background: var(--card-bg);
             border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: white;
+        }
+
+        .pkg-btn.selected {
+            background: #2563eb;
+            border-color: #3b82f6;
+            box-shadow: 0 0 10px rgba(37, 99, 235, 0.4);
+        }
+
+        .pkg-name {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .pkg-price {
+            font-size: 12px;
+            color: #facc15;
+            font-weight: 600;
+        }
+
+        .payment-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px;
+            width: 100%;
             box-sizing: border-box;
             text-align: center;
-            max-height: 90vh;
-            overflow-y: auto;
-            color: white;
+            margin-top: 10px;
+            display: none;
         }
 
         .qr-img {
@@ -256,7 +290,7 @@
             font-size: 12px;
             color: #cbd5e1;
             text-align: left;
-            margin: 8px 0;
+            margin: 10px 0;
         }
 
         .promo-container {
@@ -310,10 +344,9 @@
             box-sizing: border-box;
         }
 
-        .close-modal-btn {
+        .back-btn {
             background: #475569;
-            color: #fff;
-            margin-top: 6px;
+            margin-top: 8px;
         }
 
         .footer-credit {
@@ -322,6 +355,7 @@
             color: var(--text-muted);
             margin-top: 20px;
             line-height: 1.4;
+            width: 100%;
         }
     </style>
 </head>
@@ -374,17 +408,17 @@
 
             <div class="game-grid">
                 <!-- Free Fire Card -->
-                <div class="game-card">
+                <div class="game-card" onclick="openGameView('Free Fire')">
                     <img src="https://cdn.phototourl.com/free/2026-08-23-3b0220f7-585a-467d-8be4-c71c05107c06.jpg" alt="Free Fire" class="game-img">
                     <div style="font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #fff;">Free Fire</div>
-                    <button class="topup-btn" onclick="openGameModal('Free Fire')">TOPUP</button>
+                    <button class="topup-btn">TOPUP</button>
                 </div>
 
                 <!-- Mobile Legends Card -->
-                <div class="game-card">
+                <div class="game-card" onclick="openGameView('Mobile Legends')">
                     <img src="https://cdn.phototourl.com/free/2026-08-23-3e9a750a-c02d-4af4-98bd-dace331842b3.jpg" alt="Mobile Legends" class="game-img">
                     <div style="font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #fff;">Mobile Legends</div>
-                    <button class="topup-btn" onclick="openGameModal('Mobile Legends')">TOPUP</button>
+                    <button class="topup-btn">TOPUP</button>
                 </div>
             </div>
 
@@ -392,46 +426,49 @@
                 Credit : Ly Seav Long<br>2026-2027 @Langmusstoreshop
             </div>
         </div>
-    </div>
 
-    <!-- Modal Popup for Packages & Payment -->
-    <div class="modal" id="orderModal">
-        <div class="modal-content">
-            <h3 id="modalTitle" style="margin: 0 0 8px 0; color: #f59e0b; font-size: 16px;">ជ្រើសរើសកញ្ចប់ទុបអាប់</h3>
-            
-            <div class="form-group" style="text-align: left;">
-                <label class="form-label" id="userIdLabel">Player ID</label>
-                <input type="text" class="input-field" id="inputPlayerId" placeholder="បញ្ចូល ID ហ្គេមរបស់អ្នក...">
+        <!-- 3. Dedicated Game View Screen -->
+        <div id="gameViewScreen">
+            <div class="header">
+                <h2 id="viewGameTitle" style="color: #f59e0b; margin-bottom: 10px;">Top Up</h2>
             </div>
 
-            <div class="form-group" style="text-align: left;">
-                <label class="form-label">កញ្ចប់ពេជ្រ (Packages)</label>
-                <select class="select-box" id="packageSelect" onchange="onPackageSelected()">
-                    <!-- Populated dynamically -->
-                </select>
+            <div class="form-group">
+                <label class="form-label" id="viewIdLabel">Player ID</label>
+                <input type="text" class="input-field" id="viewPlayerId" placeholder="បញ្ចូល ID ហ្គេមរបស់អ្នក...">
             </div>
 
-            <!-- QR Container hidden until package selected -->
-            <div id="qrContainer" style="display: none;">
+            <div class="form-group">
+                <label class="form-label">ជ្រើសរើសកញ្ចប់ពេជ្រ (Packages)</label>
+                <div class="packages-grid" id="packagesGridContainer">
+                </div>
+            </div>
+
+            <div class="payment-section" id="paymentSection">
                 <div style="font-size: 12px; color: #f59e0b; font-weight: 600; margin-bottom: 4px;">ស្កេន QR Code ដើម្បីទូទាត់ប្រាក់ (ABA)</div>
                 <img src="https://cdn.phototourl.com/free/2026-08-22-5ca0fad7-942e-4bdc-826d-0b2fff2dd480.jpg" alt="ABA QR" class="qr-img">
-            </div>
-            
-            <div id="orderSummaryText" class="order-summary" style="display: none;"></div>
-            
-            <div class="promo-container" id="promoContainer" style="display: none;">
-                <label style="font-size: 11px; font-weight: 600; color: #94a3b8; margin-bottom: 3px; display: block;">មានកូដ Free ពី Admin?</label>
-                <div class="promo-row">
-                    <input type="text" id="promoInput" class="promo-input" placeholder="បញ្ចូលកូដទីនេះ...">
-                    <button class="promo-btn" onclick="applyPromoCode()">Verify</button>
+                
+                <div id="viewOrderSummary" class="order-summary"></div>
+                
+                <div class="promo-container">
+                    <label style="font-size: 11px; font-weight: 600; color: #94a3b8; margin-bottom: 3px; display: block;">មានកូដ Free ពី Admin?</label>
+                    <div class="promo-row">
+                        <input type="text" id="viewPromoInput" class="promo-input" placeholder="បញ្ចូលកូដទីនេះ...">
+                        <button class="promo-btn" onclick="applyViewPromoCode()">Verify</button>
+                    </div>
+                    <div id="viewPromoMsg" class="promo-msg"></div>
                 </div>
-                <div id="promoMsg" class="promo-msg"></div>
+                
+                <div id="viewPaymentNote" style="font-size: 11px; color: #f59e0b; margin-bottom: 8px;">⚠️ បញ្ជាក់៖ ពេលផ្ញើចូល Telegram Admin សូមភ្ជាប់ Slip មកជាមួយផង!</div>
+                
+                <a id="viewAdminLink" href="#" target="_blank" class="action-btn">Confirm & Send to Admin</a>
             </div>
-            
-            <div id="paymentNote" style="font-size: 11px; color: #f59e0b; margin-bottom: 8px; display: none;">⚠️ បញ្ជាក់៖ ពេលផ្ញើចូល Telegram Admin សូមភ្ជាប់ Slip មកជាមួយផង!</div>
-            
-            <a id="adminTelegramLink" href="#" target="_blank" class="action-btn" style="display: none;">Confirm & Send to Admin</a>
-            <button class="action-btn close-modal-btn" onclick="closeOrderModal()">Cancel</button>
+
+            <button class="action-btn back-btn" onclick="goBackToMain()">ថយក្រោយ (Back)</button>
+
+            <div class="footer-credit">
+                Credit : Ly Seav Long<br>2026-2027 @Langmusstoreshop
+            </div>
         </div>
     </div>
 
@@ -441,6 +478,8 @@
 
         let loggedUser = "";
         let currentGame = "";
+        let selectedPkgName = "";
+        let selectedPkgPrice = 0;
         let isFreeCodeApplied = false;
 
         function handleLogin() {
@@ -457,30 +496,28 @@
             document.getElementById('mainApp').style.display = 'block';
         }
 
-        const gamePackages = {
+        const gamePackagesData = {
             "Free Fire": [
-                { name: "--- សូមជ្រើសរើសកញ្ចប់ ---", price: 0 },
                 { name: "100 Diamonds", price: 1.00 },
                 { name: "310 Diamonds", price: 2.80 },
                 { name: "520 Diamonds", price: 4.50 },
                 { name: "Weekly Membership", price: 2.00 }
             ],
             "Mobile Legends": [
-                { name: "--- សូមជ្រើសរើសកញ្ចប់ ---", price: 0 },
-                { name: "86 Diamonds (Zone ID လိုအပ်)", price: 1.50 },
-                { name: "172 Diamonds (Zone ID လိုအပ်)", price: 3.00 },
-                { name: "257 Diamonds (Zone ID လိုအပ်)", price: 4.50 },
+                { name: "86 Diamonds (Zone ID)", price: 1.50 },
+                { name: "172 Diamonds (Zone ID)", price: 3.00 },
+                { name: "257 Diamonds (Zone ID)", price: 4.50 },
                 { name: "Starlight Member", price: 3.80 }
             ]
         };
 
-        function openGameModal(gameName) {
+        function openGameView(gameName) {
             currentGame = gameName;
-            document.getElementById('modalTitle').innerText = `${gameName} Top Up`;
-            document.getElementById('inputPlayerId').value = '';
+            document.getElementById('viewGameTitle').innerText = `${gameName} Top Up`;
+            document.getElementById('viewPlayerId').value = '';
             
-            let label = document.getElementById('userIdLabel');
-            let inputField = document.getElementById('inputPlayerId');
+            let label = document.getElementById('viewIdLabel');
+            let inputField = document.getElementById('viewPlayerId');
 
             if(gameName === "Free Fire") {
                 label.innerText = "Player ID (Free Fire)";
@@ -490,118 +527,102 @@
                 inputField.placeholder = "បញ្ចូល ID ( Zone ID )...";
             }
 
-            let pkgSelect = document.getElementById('packageSelect');
-            pkgSelect.innerHTML = '';
-            if(gamePackages[gameName]) {
-                gamePackages[gameName].forEach(pkg => {
-                    let opt = document.createElement('option');
-                    opt.value = pkg.price;
-                    opt.setAttribute('data-pkg', pkg.name);
-                    opt.innerText = pkg.price === 0 ? pkg.name : `${pkg.name} - $${pkg.price.toFixed(2)}`;
-                    pkgSelect.appendChild(opt);
+            let grid = document.getElementById('packagesGridContainer');
+            grid.innerHTML = '';
+            selectedPkgName = "";
+            selectedPkgPrice = 0;
+            isFreeCodeApplied = false;
+
+            document.getElementById('paymentSection').style.display = 'none';
+
+            if(gamePackagesData[gameName]) {
+                gamePackagesData[gameName].forEach((pkg) => {
+                    let btn = document.createElement('div');
+                    btn.className = 'pkg-btn';
+                    btn.innerHTML = `<div class="pkg-name">${pkg.name}</div><div class="pkg-price">$${pkg.price.toFixed(2)}</div>`;
+                    btn.onclick = () => selectPackage(pkg.name, pkg.price, btn);
+                    grid.appendChild(btn);
                 });
             }
 
+            document.getElementById('mainApp').style.display = 'none';
+            document.getElementById('gameViewScreen').style.display = 'flex';
+        }
+
+        function selectPackage(name, price, element) {
+            document.querySelectorAll('.pkg-btn').forEach(b => b.classList.remove('selected'));
+            element.classList.add('selected');
+
+            selectedPkgName = name;
+            selectedPkgPrice = price;
             isFreeCodeApplied = false;
-            document.getElementById('promoInput').value = '';
-            document.getElementById('promoMsg').innerText = '';
-            document.getElementById('qrContainer').style.display = 'none';
-            document.getElementById('orderSummaryText').style.display = 'none';
-            document.getElementById('promoContainer').style.display = 'none';
-            document.getElementById('paymentNote').style.display = 'none';
-            document.getElementById('adminTelegramLink').style.display = 'none';
 
-            document.getElementById('orderModal').style.display = 'flex';
+            document.getElementById('viewPromoInput').value = '';
+            document.getElementById('viewPromoMsg').innerText = '';
+            document.getElementById('paymentSection').style.display = 'block';
+
+            updateViewSummary();
+            updateViewTelegramLink();
         }
 
-        function onPackageSelected() {
-            let pkgSelect = document.getElementById('packageSelect');
-            let price = parseFloat(pkgSelect.value);
-
-            if(price > 0) {
-                document.getElementById('qrContainer').style.display = 'block';
-                document.getElementById('orderSummaryText').style.display = 'block';
-                document.getElementById('promoContainer').style.display = 'block';
-                document.getElementById('paymentNote').style.display = 'block';
-                document.getElementById('adminTelegramLink').style.display = 'block';
-
-                updateModalSummary();
-                updateTelegramLink();
-            } else {
-                document.getElementById('qrContainer').style.display = 'none';
-                document.getElementById('orderSummaryText').style.display = 'none';
-                document.getElementById('promoContainer').style.display = 'none';
-                document.getElementById('paymentNote').style.display = 'none';
-                document.getElementById('adminTelegramLink').style.display = 'none';
-            }
-        }
-
-        const validFreeCodes = ["LYFREE2026", "SEAVLONG", "FREESMM", "VIPANGEL"];
-
-        function applyPromoCode() {
-            let code = document.getElementById('promoInput').value.trim().toUpperCase();
-            let msg = document.getElementById('promoMsg');
+        function applyViewPromoCode() {
+            let code = document.getElementById('viewPromoInput').value.trim().toUpperCase();
+            let msg = document.getElementById('viewPromoMsg');
             
+            const validFreeCodes = ["LYFREE2026", "SEAVLONG", "FREESMM", "VIPANGEL"];
+
             if(validFreeCodes.includes(code)) {
                 isFreeCodeApplied = true;
                 msg.style.color = "#10b981";
                 msg.innerText = "✅ កូដត្រូវ! បានបញ្ចុះតម្លៃ ១០០% (Free)";
-                document.getElementById('qrContainer').style.display = "none";
-                document.getElementById('paymentNote').style.display = "none";
+                document.getElementById('paymentSection').querySelector('img').style.display = 'none';
+                document.getElementById('viewPaymentNote').style.display = 'none';
             } else {
                 isFreeCodeApplied = false;
                 msg.style.color = "#ef4444";
                 msg.innerText = "❌ កូដមិនត្រឹមត្រូវ!";
-                document.getElementById('qrContainer').style.display = "block";
-                document.getElementById('paymentNote').style.display = "block";
+                document.getElementById('paymentSection').querySelector('img').style.display = 'inline-block';
+                document.getElementById('viewPaymentNote').style.display = 'block';
             }
-            updateModalSummary();
-            updateTelegramLink();
+            updateViewSummary();
+            updateViewTelegramLink();
         }
 
-        function updateModalSummary() {
-            let playerId = document.getElementById('inputPlayerId').value.trim() || "មិនទាន់បញ្ចូល";
-            let pkgSelect = document.getElementById('packageSelect');
-            let selectedOpt = pkgSelect.options[pkgSelect.selectedIndex];
-            let pkgName = selectedOpt ? selectedOpt.getAttribute('data-pkg') : '';
-            let pkgPrice = selectedOpt ? parseFloat(selectedOpt.value) : 0;
+        function updateViewSummary() {
+            let playerId = document.getElementById('viewPlayerId').value.trim() || "មិនទាន់បញ្ចូល";
+            let displayPrice = isFreeCodeApplied ? `<span style="color:#10b981; font-weight:bold;">$0.00 (Free Code)</span>` : `<span style="color:#f59e0b; font-weight:bold;">$${selectedPkgPrice.toFixed(2)}</span>`;
 
-            let displayPrice = isFreeCodeApplied ? `<span style="color:#10b981; font-weight:bold;">$0.00 (Free Code)</span>` : `<span style="color:#f59e0b; font-weight:bold;">$${pkgPrice.toFixed(2)}</span>`;
-
-            document.getElementById('orderSummaryText').innerHTML = 
+            document.getElementById('viewOrderSummary').innerHTML = 
                 `<b>គណនី (User):</b> ${loggedUser}<br>` +
                 `<b>ហ្គេម:</b> ${currentGame}<br>` +
                 `<b>ID:</b> <b>${playerId}</b><br>` +
-                `<b>កញ្ចប់:</b> ${pkgName}<br>` +
+                `<b>កញ្ចប់:</b> ${selectedPkgName}<br>` +
                 `<b>តម្លៃសរុប:</b> ${displayPrice}`;
         }
 
-        function updateTelegramLink() {
-            let playerId = document.getElementById('inputPlayerId').value.trim();
-            let pkgSelect = document.getElementById('packageSelect');
-            let selectedOpt = pkgSelect.options[pkgSelect.selectedIndex];
-            let pkgName = selectedOpt ? selectedOpt.getAttribute('data-pkg') : '';
-            let pkgPrice = selectedOpt ? parseFloat(selectedOpt.value) : 0;
-            let codeUsed = document.getElementById('promoInput').value.trim().toUpperCase();
+        function updateViewTelegramLink() {
+            let playerId = document.getElementById('viewPlayerId').value.trim();
+            let codeUsed = document.getElementById('viewPromoInput').value.trim().toUpperCase();
 
             let text = "";
             if(isFreeCodeApplied) {
-                text = encodeURIComponent(`👤 [អតិថិជន: ${loggedUser}]\n🎁 [ទុបអាប់ហ្វ្រី - ANGKOR TOP UP]\n🎮 ហ្គេម: ${currentGame}\n🆔 ID: ${playerId}\n📦 កញ្ចប់: ${pkgName}\n🎟️ កូដ: ${codeUsed} (FREE $0.00)\n🚀 (សូមទុបអាប់ជូនអតិថិជននេះភ្លាមបង!)`);
+                text = encodeURIComponent(`👤 [អតិថិជន: ${loggedUser}]\n🎁 [ទុបអាប់ហ្វ្រី - ANGKOR TOP UP]\n🎮 ហ្គេម: ${currentGame}\n🆔 ID: ${playerId}\n📦 កញ្ចប់: ${selectedPkgName}\n🎟️ កូដ: ${codeUsed} (FREE $0.00)\n🚀 (សូមទុបអាប់ជូនអតិថិជននេះភ្លាមបង!)`);
             } else {
-                text = encodeURIComponent(`👤 [អតិថិជន: ${loggedUser}]\n🎮 [ទុបអាប់ហ្គេម - ANGKOR TOP UP]\n🎮 ហ្គេម: ${currentGame}\n🆔 ID: ${playerId}\n📦 កញ្ចប់: ${pkgName} ($${pkgPrice.toFixed(2)})\n🧾 (សូមផ្ញើរូប Slip មកទីនេះផងបង!)`);
+                text = encodeURIComponent(`👤 [អតិថិជន: ${loggedUser}]\n🎮 [ទុបអាប់ហ្គេម - ANGKOR TOP UP]\n🎮 ហ្គេម: ${currentGame}\n🆔 ID: ${playerId}\n📦 កញ្ចប់: ${selectedPkgName} ($${selectedPkgPrice.toFixed(2)})\n🧾 (សូមផ្ញើរូប Slip មកទីនេះផងបង!)`);
             }
-            document.getElementById('adminTelegramLink').href = `https://t.me/NEAKKROBKRONG?text=${text}`;
+            document.getElementById('viewAdminLink').href = `https://t.me/NEAKKROBKRONG?text=${text}`;
         }
 
-        document.getElementById('inputPlayerId').addEventListener('input', () => {
-            if(parseFloat(document.getElementById('packageSelect').value) > 0) {
-                updateModalSummary();
-                updateTelegramLink();
+        document.getElementById('viewPlayerId').addEventListener('input', () => {
+            if(selectedPkgName) {
+                updateViewSummary();
+                updateViewTelegramLink();
             }
         });
 
-        function closeOrderModal() {
-            document.getElementById('orderModal').style.display = 'none';
+        function goBackToMain() {
+            document.getElementById('gameViewScreen').style.display = 'none';
+            document.getElementById('mainApp').style.display = 'block';
         }
     </script>
 </body>
