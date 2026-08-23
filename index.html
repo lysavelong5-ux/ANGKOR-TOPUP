@@ -100,7 +100,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
-        /* Modern Smooth Marquee (No breaking) */
+        /* Smooth Marquee Banner */
         .marquee-box {
             background: linear-gradient(135deg, #d97706, #b45309);
             color: white;
@@ -362,7 +362,8 @@
                 <h2>ANGKOR TOP UP GAME STORE</h2>
             </div>
 
-            <img src="https://cdn.phototourl.com/free/2026-08-23-b0262a61-7b2f-48a9-9b7b-7eafb116752b.jpg" alt="Banner" class="banner-img">
+            <!-- Banner Image -->
+            <img src="https://cdn.phototourl.com/free/2026-08-23-87a59eac-beb0-4564-8490-7492626e7c9b.png" alt="Banner" class="banner-img">
 
             <!-- Smooth Marquee Banner -->
             <div class="marquee-box">
@@ -374,14 +375,14 @@
             <div class="game-grid">
                 <!-- Free Fire Card -->
                 <div class="game-card">
-                    <img src="https://cdn.phototourl.com/free/2026-08-23-b0262a61-7b2f-48a9-9b7b-7eafb116752b.jpg" alt="Free Fire" class="game-img">
+                    <img src="https://cdn.phototourl.com/free/2026-08-23-3b0220f7-585a-467d-8be4-c71c05107c06.jpg" alt="Free Fire" class="game-img">
                     <div style="font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #fff;">Free Fire</div>
                     <button class="topup-btn" onclick="openGameModal('Free Fire')">TOPUP</button>
                 </div>
 
                 <!-- Mobile Legends Card -->
                 <div class="game-card">
-                    <img src="https://cdn.phototourl.com/free/2026-08-23-b0262a61-7b2f-48a9-9b7b-7eafb116752b.jpg" alt="Mobile Legends" class="game-img">
+                    <img src="https://cdn.phototourl.com/free/2026-08-23-3e9a750a-c02d-4af4-98bd-dace331842b3.jpg" alt="Mobile Legends" class="game-img">
                     <div style="font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #fff;">Mobile Legends</div>
                     <button class="topup-btn" onclick="openGameModal('Mobile Legends')">TOPUP</button>
                 </div>
@@ -405,19 +406,20 @@
 
             <div class="form-group" style="text-align: left;">
                 <label class="form-label">កញ្ចប់ពេជ្រ (Packages)</label>
-                <select class="select-box" id="packageSelect">
+                <select class="select-box" id="packageSelect" onchange="onPackageSelected()">
                     <!-- Populated dynamically -->
                 </select>
             </div>
 
-            <div id="qrContainer">
+            <!-- QR Container hidden until package selected -->
+            <div id="qrContainer" style="display: none;">
                 <div style="font-size: 12px; color: #f59e0b; font-weight: 600; margin-bottom: 4px;">ស្កេន QR Code ដើម្បីទូទាត់ប្រាក់ (ABA)</div>
                 <img src="https://cdn.phototourl.com/free/2026-08-22-5ca0fad7-942e-4bdc-826d-0b2fff2dd480.jpg" alt="ABA QR" class="qr-img">
             </div>
             
-            <div id="orderSummaryText" class="order-summary"></div>
+            <div id="orderSummaryText" class="order-summary" style="display: none;"></div>
             
-            <div class="promo-container">
+            <div class="promo-container" id="promoContainer" style="display: none;">
                 <label style="font-size: 11px; font-weight: 600; color: #94a3b8; margin-bottom: 3px; display: block;">មានកូដ Free ពី Admin?</label>
                 <div class="promo-row">
                     <input type="text" id="promoInput" class="promo-input" placeholder="បញ្ចូលកូដទីនេះ...">
@@ -426,9 +428,9 @@
                 <div id="promoMsg" class="promo-msg"></div>
             </div>
             
-            <div id="paymentNote" style="font-size: 11px; color: #f59e0b; margin-bottom: 8px;">⚠️ បញ្ជាក់៖ ពេលផ្ញើចូល Telegram Admin សូមភ្ជាប់ Slip មកជាមួយផង!</div>
+            <div id="paymentNote" style="font-size: 11px; color: #f59e0b; margin-bottom: 8px; display: none;">⚠️ បញ្ជាក់៖ ពេលផ្ញើចូល Telegram Admin សូមភ្ជាប់ Slip មកជាមួយផង!</div>
             
-            <a id="adminTelegramLink" href="#" target="_blank" class="action-btn">Confirm & Send to Admin</a>
+            <a id="adminTelegramLink" href="#" target="_blank" class="action-btn" style="display: none;">Confirm & Send to Admin</a>
             <button class="action-btn close-modal-btn" onclick="closeOrderModal()">Cancel</button>
         </div>
     </div>
@@ -457,12 +459,14 @@
 
         const gamePackages = {
             "Free Fire": [
+                { name: "--- សូមជ្រើសរើសកញ្ចប់ ---", price: 0 },
                 { name: "100 Diamonds", price: 1.00 },
                 { name: "310 Diamonds", price: 2.80 },
                 { name: "520 Diamonds", price: 4.50 },
                 { name: "Weekly Membership", price: 2.00 }
             ],
             "Mobile Legends": [
+                { name: "--- សូមជ្រើសរើសកញ្ចប់ ---", price: 0 },
                 { name: "86 Diamonds (Zone ID လိုအပ်)", price: 1.50 },
                 { name: "172 Diamonds (Zone ID လိုအပ်)", price: 3.00 },
                 { name: "257 Diamonds (Zone ID လိုအပ်)", price: 4.50 },
@@ -493,7 +497,7 @@
                     let opt = document.createElement('option');
                     opt.value = pkg.price;
                     opt.setAttribute('data-pkg', pkg.name);
-                    opt.innerText = `${pkg.name} - $${pkg.price.toFixed(2)}`;
+                    opt.innerText = pkg.price === 0 ? pkg.name : `${pkg.name} - $${pkg.price.toFixed(2)}`;
                     pkgSelect.appendChild(opt);
                 });
             }
@@ -501,13 +505,35 @@
             isFreeCodeApplied = false;
             document.getElementById('promoInput').value = '';
             document.getElementById('promoMsg').innerText = '';
-            document.getElementById('qrContainer').style.display = 'block';
-            document.getElementById('paymentNote').style.display = 'block';
-
-            updateModalSummary();
-            updateTelegramLink();
+            document.getElementById('qrContainer').style.display = 'none';
+            document.getElementById('orderSummaryText').style.display = 'none';
+            document.getElementById('promoContainer').style.display = 'none';
+            document.getElementById('paymentNote').style.display = 'none';
+            document.getElementById('adminTelegramLink').style.display = 'none';
 
             document.getElementById('orderModal').style.display = 'flex';
+        }
+
+        function onPackageSelected() {
+            let pkgSelect = document.getElementById('packageSelect');
+            let price = parseFloat(pkgSelect.value);
+
+            if(price > 0) {
+                document.getElementById('qrContainer').style.display = 'block';
+                document.getElementById('orderSummaryText').style.display = 'block';
+                document.getElementById('promoContainer').style.display = 'block';
+                document.getElementById('paymentNote').style.display = 'block';
+                document.getElementById('adminTelegramLink').style.display = 'block';
+
+                updateModalSummary();
+                updateTelegramLink();
+            } else {
+                document.getElementById('qrContainer').style.display = 'none';
+                document.getElementById('orderSummaryText').style.display = 'none';
+                document.getElementById('promoContainer').style.display = 'none';
+                document.getElementById('paymentNote').style.display = 'none';
+                document.getElementById('adminTelegramLink').style.display = 'none';
+            }
         }
 
         const validFreeCodes = ["LYFREE2026", "SEAVLONG", "FREESMM", "VIPANGEL"];
@@ -568,13 +594,10 @@
         }
 
         document.getElementById('inputPlayerId').addEventListener('input', () => {
-            updateModalSummary();
-            updateTelegramLink();
-        });
-
-        document.getElementById('packageSelect').addEventListener('change', () => {
-            updateModalSummary();
-            updateTelegramLink();
+            if(parseFloat(document.getElementById('packageSelect').value) > 0) {
+                updateModalSummary();
+                updateTelegramLink();
+            }
         });
 
         function closeOrderModal() {
