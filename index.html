@@ -83,18 +83,23 @@
             display: none;
         }
 
+        /* Header Title at Top */
         .header {
             text-align: center;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .header h2 {
-            margin: 4px 0 2px 0;
-            color: var(--primary-color);
-            font-size: 19px;
+            margin: 0;
+            color: var(--text-main);
+            font-size: 22px;
+            font-weight: 800;
             letter-spacing: 0.5px;
+            text-transform: uppercase;
+            line-height: 1.2;
         }
 
+        /* Banner Image */
         .banner-img {
             width: 100%;
             height: 160px;
@@ -105,40 +110,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
-        .marquee-box {
-            background: linear-gradient(135deg, #d97706, #b45309);
-            color: white;
-            padding: 10px 0;
-            border-radius: 50px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3);
-            overflow: hidden;
-            position: relative;
-            width: 100%;
-        }
-
-        .marquee-content {
-            display: inline-block;
-            white-space: nowrap;
-            animation: marquee 15s linear infinite;
-        }
-
-        @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-
-        .section-title {
-            font-size: 15px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--text-main);
-            text-align: left;
-            width: 100%;
-        }
-
+        /* Game Cards Grid */
         .game-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -179,6 +151,43 @@
             border-radius: 20px;
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(250, 204, 21, 0.3);
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        /* Smooth Marquee Banner with Megaphone */
+        .marquee-box {
+            background: linear-gradient(135deg, #d97706, #b45309);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3);
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .marquee-container {
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 15s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
         }
 
         .form-group {
@@ -391,34 +400,36 @@
 
         <!-- 2. Main Store Screen -->
         <div id="mainApp">
+            <!-- Header Title -->
             <div class="header">
-                <img src="https://cdn.phototourl.com/free/2026-08-23-b0262a61-7b2f-48a9-9b7b-7eafb116752b.jpg" alt="Logo" class="app-logo" style="width: 55px; height: 55px; margin-bottom: 4px;">
-                <h2>ANGKOR TOP UP GAME STORE</h2>
+                <h2>ANGKOR TOP UP<br>GAME STORE</h2>
             </div>
 
             <!-- Banner Image -->
             <img src="https://cdn.phototourl.com/free/2026-08-23-87a59eac-beb0-4564-8490-7492626e7c9b.png" alt="Banner" class="banner-img">
 
-            <!-- Smooth Marquee Banner -->
-            <div class="marquee-box">
-                <div class="marquee-content">📢 សេវាកម្មទុបអាប់ហ្គេម លឿនរហ័ស ទុកចិត្ត 100% ✨💎</div>
-            </div>
-
-            <div class="section-title">🛍️ Game Top Up</div>
-
+            <!-- Game Cards Grid -->
             <div class="game-grid">
                 <!-- Free Fire Card -->
                 <div class="game-card" onclick="openGameView('Free Fire')">
                     <img src="https://cdn.phototourl.com/free/2026-08-23-3b0220f7-585a-467d-8be4-c71c05107c06.jpg" alt="Free Fire" class="game-img">
-                    <div style="font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #fff;">Free Fire</div>
-                    <button class="topup-btn">TOPUP</button>
+                    <div style="font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 2px;">Free Fire</div>
+                    <button class="topup-btn">TopUp</button>
                 </div>
 
                 <!-- Mobile Legends Card -->
                 <div class="game-card" onclick="openGameView('Mobile Legends')">
                     <img src="https://cdn.phototourl.com/free/2026-08-23-3e9a750a-c02d-4af4-98bd-dace331842b3.jpg" alt="Mobile Legends" class="game-img">
-                    <div style="font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #fff;">Mobile Legends</div>
-                    <button class="topup-btn">TOPUP</button>
+                    <div style="font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 2px;">Mobile</div>
+                    <button class="topup-btn">TopUp</button>
+                </div>
+            </div>
+
+            <!-- Smooth Marquee Banner with Megaphone -->
+            <div class="marquee-box">
+                <span style="font-size: 18px;">📢</span>
+                <div class="marquee-container">
+                    <div class="marquee-content">សេវាកម្មទុបអាប់ហ្គេម លឿនរហ័ស ទុកចិត្ត 100% ✨💎</div>
                 </div>
             </div>
 
@@ -627,3 +638,4 @@
     </script>
 </body>
 </html>
+៩៩ោលឦ.  
