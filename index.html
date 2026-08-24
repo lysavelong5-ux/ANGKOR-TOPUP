@@ -88,7 +88,6 @@
             box-shadow: 0 6px 20px rgba(0,0,0,0.4);
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
         }
 
         .game-card:hover {
@@ -183,12 +182,10 @@
             box-sizing: border-box;
             outline: none;
             font-family: inherit;
-            transition: border-color 0.2s;
         }
 
         .input-field:focus {
             border-color: var(--gold-primary);
-            box-shadow: 0 0 8px rgba(245, 158, 11, 0.2);
         }
 
         .packages-grid {
@@ -196,7 +193,7 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             width: 100%;
-            margin-bottom: 16px;
+            margin-bottom: 10px;
         }
 
         .pkg-btn {
@@ -222,8 +219,8 @@
         }
 
         .pkg-name {
-            font-size: 13px;
-            font-weight: 700;
+            font-size: 14px;
+            font-weight: 800;
             margin-bottom: 4px;
         }
 
@@ -231,6 +228,49 @@
             font-size: 12px;
             color: #facc15;
             font-weight: 700;
+        }
+
+        /* Promo Code Section right under Packages */
+        .promo-section-inline {
+            background: rgba(19, 27, 46, 0.6);
+            border: 1px dashed rgba(245, 158, 11, 0.4);
+            border-radius: 14px;
+            padding: 12px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .promo-row {
+            display: flex;
+            gap: 8px;
+        }
+        .promo-input {
+            flex: 1;
+            padding: 10px 12px;
+            background: #0d1322;
+            border: 1px solid var(--border-color);
+            color: white;
+            border-radius: 10px;
+            font-size: 12px;
+            outline: none;
+            text-transform: uppercase;
+        }
+        .promo-btn {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 0 14px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .promo-msg {
+            font-size: 11px;
+            margin-top: 5px;
+            font-weight: 600;
         }
 
         .confirm-pay-btn {
@@ -270,7 +310,6 @@
             border: 2px solid var(--gold-primary);
             background: white;
             padding: 6px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         .order-summary {
@@ -283,41 +322,6 @@
             text-align: left;
             margin: 12px 0;
             line-height: 1.5;
-        }
-
-        .promo-container {
-            margin: 12px 0;
-            text-align: left;
-        }
-        .promo-row {
-            display: flex;
-            gap: 8px;
-        }
-        .promo-input {
-            flex: 1;
-            padding: 10px 12px;
-            background: #0d1322;
-            border: 1px solid var(--border-color);
-            color: white;
-            border-radius: 10px;
-            font-size: 12px;
-            outline: none;
-            text-transform: uppercase;
-        }
-        .promo-btn {
-            background: #4f46e5;
-            color: white;
-            border: none;
-            padding: 0 14px;
-            border-radius: 10px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-        .promo-msg {
-            font-size: 11px;
-            margin-top: 5px;
-            font-weight: 600;
         }
 
         .action-btn {
@@ -341,7 +345,6 @@
             background: #334155;
             margin-top: 10px;
             width: 100%;
-            box-shadow: none;
         }
 
         .footer-credit {
@@ -404,10 +407,20 @@
                 <input type="text" class="input-field" id="viewPlayerId" placeholder="បញ្ចូល ID ហ្គេមរបស់អ្នក...">
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="margin-bottom: 10px;">
                 <label class="form-label">ជ្រើសរើសកញ្ចប់ពេជ្រ (Packages)</label>
                 <div class="packages-grid" id="packagesGridContainer">
                 </div>
+            </div>
+
+            <!-- Promo Code Section right under Packages -->
+            <div class="promo-section-inline">
+                <label style="font-size: 12px; font-weight: 600; color: #f59e0b; margin-bottom: 4px; display: block;">មានកូដបញ្ចុះតម្លៃពី Admin?</label>
+                <div class="promo-row">
+                    <input type="text" id="viewPromoInput" class="promo-input" placeholder="បញ្ចូលកូដទីនេះ (ឧ. DISCOUNT10)...">
+                    <button class="promo-btn" onclick="applyViewPromoCode()">Verify</button>
+                </div>
+                <div id="viewPromoMsg" class="promo-msg"></div>
             </div>
 
             <button class="confirm-pay-btn" onclick="showPaymentQR()">ចុចទីនេះដើម្បីទូទាត់ប្រាក់ (Confirm Payment)</button>
@@ -417,15 +430,6 @@
                 <img src="https://cdn.phototourl.com/free/2026-08-22-5ca0fad7-942e-4bdc-826d-0b2fff2dd480.jpg" alt="ABA QR" class="qr-img">
                 
                 <div id="viewOrderSummary" class="order-summary"></div>
-                
-                <div class="promo-container">
-                    <label style="font-size: 11px; font-weight: 600; color: #94a3b8; margin-bottom: 3px; display: block;">មានកូដ Free ពី Admin?</label>
-                    <div class="promo-row">
-                        <input type="text" id="viewPromoInput" class="promo-input" placeholder="បញ្ចូលកូដទីនេះ...">
-                        <button class="promo-btn" onclick="applyViewPromoCode()">Verify</button>
-                    </div>
-                    <div id="viewPromoMsg" class="promo-msg"></div>
-                </div>
                 
                 <div id="viewPaymentNote" style="font-size: 11px; color: #f59e0b; margin-bottom: 8px;">⚠️ បញ្ជាក់៖ ពេលផ្ញើចូល Telegram Admin សូមភ្ជាប់ Slip មកជាមួយផង!</div>
                 
@@ -447,20 +451,20 @@
         let currentGame = "";
         let selectedPkgName = "";
         let selectedPkgPrice = 0;
-        let isFreeCodeApplied = false;
+        let discountPercent = 0;
 
         const gamePackagesData = {
             "Free Fire": [
-                { name: "100 Diamonds", price: 1.00 },
-                { name: "310 Diamonds", price: 2.80 },
-                { name: "520 Diamonds", price: 4.50 },
-                { name: "Weekly Membership", price: 2.00 }
+                { name: "10 DM", price: 0.15 },
+                { name: "20 DM", price: 0.30 },
+                { name: "30 DM", price: 0.45 },
+                { name: "100 DM", price: 1.20 }
             ],
             "Mobile Legends": [
-                { name: "86 Diamonds (Zone ID)", price: 1.50 },
-                { name: "172 Diamonds (Zone ID)", price: 3.00 },
-                { name: "257 Diamonds (Zone ID)", price: 4.50 },
-                { name: "Starlight Member", price: 3.80 }
+                { name: "10 DM", price: 0.20 },
+                { name: "20 DM", price: 0.35 },
+                { name: "30 DM", price: 0.50 },
+                { name: "100 DM", price: 1.30 }
             ]
         };
 
@@ -468,6 +472,8 @@
             currentGame = gameName;
             document.getElementById('viewGameTitle').innerText = `${gameName} Top Up`;
             document.getElementById('viewPlayerId').value = '';
+            document.getElementById('viewPromoInput').value = '';
+            document.getElementById('viewPromoMsg').innerText = '';
             
             let label = document.getElementById('viewIdLabel');
             let inputField = document.getElementById('viewPlayerId');
@@ -484,7 +490,7 @@
             grid.innerHTML = '';
             selectedPkgName = "";
             selectedPkgPrice = 0;
-            isFreeCodeApplied = false;
+            discountPercent = 0;
 
             document.getElementById('paymentSection').style.display = 'none';
 
@@ -508,11 +514,32 @@
 
             selectedPkgName = name;
             selectedPkgPrice = price;
-            isFreeCodeApplied = false;
-
-            document.getElementById('viewPromoInput').value = '';
-            document.getElementById('viewPromoMsg').innerText = '';
+            
             document.getElementById('paymentSection').style.display = 'none';
+        }
+
+        function applyViewPromoCode() {
+            let code = document.getElementById('viewPromoInput').value.trim().toUpperCase();
+            let msg = document.getElementById('viewPromoMsg');
+            
+            const promoCodes = {
+                "DISCOUNT10": 10,
+                "DISCOUNT20": 20,
+                "DISCOUNT30": 30,
+                "DISCOUNT40": 40,
+                "DISCOUNT50": 50,
+                "LYFREE2026": 100
+            };
+
+            if(promoCodes.hasOwnProperty(code)) {
+                discountPercent = promoCodes[code];
+                msg.style.color = "#10b981";
+                msg.innerText = `✅ កូដត្រូវ! បានបញ្ចុះតម្លៃ ${discountPercent}%`;
+            } else {
+                discountPercent = 0;
+                msg.style.color = "#ef4444";
+                msg.innerText = "❌ កូដមិនត្រឹមត្រូវ!";
+            }
         }
 
         function showPaymentQR() {
@@ -533,32 +560,16 @@
             document.getElementById('paymentSection').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function applyViewPromoCode() {
-            let code = document.getElementById('viewPromoInput').value.trim().toUpperCase();
-            let msg = document.getElementById('viewPromoMsg');
-            
-            const validFreeCodes = ["LYFREE2026", "SEAVLONG", "FREESMM", "VIPANGEL"];
-
-            if(validFreeCodes.includes(code)) {
-                isFreeCodeApplied = true;
-                msg.style.color = "#10b981";
-                msg.innerText = "✅ កូដត្រូវ! បានបញ្ចុះតម្លៃ ១០០% (Free)";
-                document.getElementById('paymentSection').querySelector('img').style.display = 'none';
-                document.getElementById('viewPaymentNote').style.display = 'none';
-            } else {
-                isFreeCodeApplied = false;
-                msg.style.color = "#ef4444";
-                msg.innerText = "❌ កូដមិនត្រឹមត្រូវ!";
-                document.getElementById('paymentSection').querySelector('img').style.display = 'inline-block';
-                document.getElementById('viewPaymentNote').style.display = 'block';
-            }
-            updateViewSummary();
-            updateViewTelegramLink();
-        }
-
         function updateViewSummary() {
             let playerId = document.getElementById('viewPlayerId').value.trim() || "មិនទាន់បញ្ចូល";
-            let displayPrice = isFreeCodeApplied ? `<span style="color:#10b981; font-weight:bold;">$0.00 (Free Code)</span>` : `<span style="color:#f59e0b; font-weight:bold;">$${selectedPkgPrice.toFixed(2)}</span>`;
+            let finalPrice = selectedPkgPrice * (1 - discountPercent / 100);
+            
+            let displayPrice = "";
+            if(discountPercent > 0) {
+                displayPrice = `<span style="text-decoration: line-through; color: #94a3b8;">$${selectedPkgPrice.toFixed(2)}</span> <span style="color:#10b981; font-weight:bold;">$${finalPrice.toFixed(2)} (${discountPercent}% OFF)</span>`;
+            } else {
+                displayPrice = `<span style="color:#f59e0b; font-weight:bold;">$${selectedPkgPrice.toFixed(2)}</span>`;
+            }
 
             document.getElementById('viewOrderSummary').innerHTML = 
                 `<b>ហ្គេម:</b> ${currentGame}<br>` +
@@ -570,10 +581,11 @@
         function updateViewTelegramLink() {
             let playerId = document.getElementById('viewPlayerId').value.trim();
             let codeUsed = document.getElementById('viewPromoInput').value.trim().toUpperCase();
+            let finalPrice = selectedPkgPrice * (1 - discountPercent / 100);
 
             let text = "";
-            if(isFreeCodeApplied) {
-                text = encodeURIComponent(`🎁 [ទុបអាប់ហ្វ្រី - ANGKOR TOP UP]\n🎮 ហ្គេម: ${currentGame}\n🆔 ID: ${playerId}\n📦 កញ្ចប់: ${selectedPkgName}\n🎟️ កូដ: ${codeUsed} (FREE $0.00)\n🚀 (សូមទុបអាប់ជូនអតិថិជននេះភ្លាមបង!)`);
+            if(discountPercent > 0) {
+                text = encodeURIComponent(`🎁 [ទុបអាប់បញ្ចុះតម្លៃ - ANGKOR TOP UP]\n🎮 ហ្គេម: ${currentGame}\n🆔 ID: ${playerId}\n📦 កញ្ចប់: ${selectedPkgName}\n🎟️ កូដ: ${codeUsed || "គ្មាន"} (${discountPercent}% OFF)\n💰 តម្លៃត្រូវបង់: $${finalPrice.toFixed(2)}\n🧾 (សូមផ្ញើរូប Slip មកទីនេះផងបង!)`);
             } else {
                 text = encodeURIComponent(`🎮 [ទុបអាប់ហ្គេម - ANGKOR TOP UP]\n🎮 ហ្គេម: ${currentGame}\n🆔 ID: ${playerId}\n📦 កញ្ចប់: ${selectedPkgName} ($${selectedPkgPrice.toFixed(2)})\n🧾 (សូមផ្ញើរូប Slip មកទីនេះផងបង!)`);
             }
