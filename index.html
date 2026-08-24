@@ -5,23 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ANGKOR TOP UP GAME STORE</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --border-color: #334155;
-            --primary-color: #f59e0b;
+            --bg-color: #07090e;
+            --card-bg: linear-gradient(135deg, #131b2e 0%, #0d1322 100%);
+            --border-color: #1e293b;
+            --gold-primary: #f59e0b;
+            --gold-gradient: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
             --text-main: #ffffff;
             --text-muted: #94a3b8;
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-color);
+            background: radial-gradient(circle at top, #1a1003 0%, var(--bg-color) 60%);
             color: var(--text-main);
             margin: 0;
-            padding: 14px;
+            padding: 16px;
+            min-height: 100vh;
         }
 
         .container {
@@ -42,33 +44,36 @@
 
         .header {
             text-align: center;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
 
         .header h2 {
             margin: 0;
-            color: var(--text-main);
-            font-size: 22px;
+            background: linear-gradient(to right, #fef08a, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 24px;
             font-weight: 800;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             text-transform: uppercase;
             line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(245, 158, 11, 0.2);
         }
 
         .banner-img {
             width: 100%;
-            height: 160px;
-            border-radius: 14px;
+            height: 170px;
+            border-radius: 16px;
             object-fit: cover;
-            border: 1px solid var(--border-color);
-            margin-bottom: 14px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            margin-bottom: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
         }
 
         .game-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            gap: 14px;
             margin-bottom: 16px;
             width: 100%;
         }
@@ -76,13 +81,19 @@
         .game-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
+            border-radius: 18px;
             overflow: hidden;
             text-align: center;
-            padding-bottom: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            padding-bottom: 14px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .game-card:hover {
+            border-color: rgba(245, 158, 11, 0.5);
+            transform: translateY(-3px);
         }
 
         .game-card:active {
@@ -91,34 +102,37 @@
 
         .game-img {
             width: 100%;
-            height: 110px;
+            height: 120px;
             object-fit: cover;
             margin-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .topup-btn {
-            background: #facc15;
-            color: #1e293b;
+            background: var(--gold-gradient);
+            color: #1a1003;
             border: none;
-            padding: 8px 16px;
+            padding: 8px 18px;
             font-size: 13px;
-            font-weight: 700;
+            font-weight: 800;
             border-radius: 20px;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(250, 204, 21, 0.3);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
             display: inline-block;
             margin-top: 4px;
+            text-transform: uppercase;
         }
 
         .marquee-box {
-            background: linear-gradient(135deg, #d97706, #b45309);
-            color: white;
+            background: linear-gradient(135deg, rgba(217, 119, 6, 0.2), rgba(180, 83, 9, 0.2));
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #fef08a;
             padding: 10px 14px;
             border-radius: 50px;
             font-size: 13px;
             font-weight: 600;
             margin-bottom: 16px;
-            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             overflow: hidden;
             position: relative;
             width: 100%;
@@ -145,7 +159,7 @@
         }
 
         .form-group {
-            margin-bottom: 14px;
+            margin-bottom: 16px;
             text-align: left;
             width: 100%;
         }
@@ -153,28 +167,34 @@
         .form-label {
             font-size: 13px;
             font-weight: 600;
-            color: var(--text-muted);
+            color: #cbd5e1;
             margin-bottom: 6px;
             display: block;
         }
 
         .input-field {
             width: 100%;
-            padding: 12px 14px;
-            background: #0f172a;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
+            padding: 13px 14px;
+            background: #0d1322;
+            border: 1px solid #334155;
+            border-radius: 14px;
             font-size: 13px;
             color: white;
             box-sizing: border-box;
             outline: none;
             font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .input-field:focus {
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 8px rgba(245, 158, 11, 0.2);
         }
 
         .packages-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            gap: 12px;
             width: 100%;
             margin-bottom: 16px;
         }
@@ -182,18 +202,23 @@
         .pkg-btn {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 12px 10px;
+            border-radius: 14px;
+            padding: 14px 10px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s;
             color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .pkg-btn:hover {
+            border-color: #3b82f6;
         }
 
         .pkg-btn.selected {
-            background: #2563eb;
-            border-color: #3b82f6;
-            box-shadow: 0 0 10px rgba(37, 99, 235, 0.4);
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            border-color: #60a5fa;
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
         }
 
         .pkg-name {
@@ -205,129 +230,136 @@
         .pkg-price {
             font-size: 12px;
             color: #facc15;
-            font-weight: 600;
+            font-weight: 700;
         }
 
-        /* Confirm Payment Button */
         .confirm-pay-btn {
             width: 100%;
-            padding: 13px;
-            background: #f59e0b;
+            padding: 14px;
+            background: var(--gold-gradient);
             border: none;
-            color: #1e293b;
+            color: #1a1003;
             font-size: 15px;
-            font-weight: 700;
-            border-radius: 12px;
+            font-weight: 800;
+            border-radius: 14px;
             cursor: pointer;
-            margin-top: 10px;
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+            margin-top: 6px;
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+            text-transform: uppercase;
         }
 
         .payment-section {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 16px;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 18px;
+            padding: 18px;
             width: 100%;
             box-sizing: border-box;
             text-align: center;
-            margin-top: 15px;
+            margin-top: 16px;
             display: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .qr-img {
             width: 150px;
             height: 150px;
-            border-radius: 10px;
-            margin: 8px 0;
+            border-radius: 12px;
+            margin: 10px 0;
             object-fit: contain;
-            border: 1px solid var(--border-color);
+            border: 2px solid var(--gold-primary);
             background: white;
-            padding: 5px;
+            padding: 6px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         .order-summary {
-            background: #0f172a;
+            background: #0d1322;
             border: 1px solid var(--border-color);
-            padding: 10px;
-            border-radius: 10px;
+            padding: 12px;
+            border-radius: 12px;
             font-size: 12px;
             color: #cbd5e1;
             text-align: left;
-            margin: 10px 0;
+            margin: 12px 0;
+            line-height: 1.5;
         }
 
         .promo-container {
-            margin: 10px 0;
+            margin: 12px 0;
             text-align: left;
         }
         .promo-row {
             display: flex;
-            gap: 6px;
+            gap: 8px;
         }
         .promo-input {
             flex: 1;
-            padding: 8px 10px;
-            background: #0f172a;
+            padding: 10px 12px;
+            background: #0d1322;
             border: 1px solid var(--border-color);
             color: white;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 12px;
             outline: none;
             text-transform: uppercase;
         }
         .promo-btn {
-            background: #6366f1;
+            background: #4f46e5;
             color: white;
             border: none;
-            padding: 0 12px;
-            border-radius: 8px;
+            padding: 0 14px;
+            border-radius: 10px;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
         }
         .promo-msg {
             font-size: 11px;
-            margin-top: 4px;
+            margin-top: 5px;
             font-weight: 600;
         }
 
         .action-btn {
             width: 100%;
-            padding: 12px;
-            background: #10b981;
+            padding: 13px;
+            background: linear-gradient(135deg, #059669, #047857);
             border: none;
             color: white;
             font-size: 14px;
             font-weight: 700;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             text-decoration: none;
             display: block;
-            margin-top: 10px;
+            margin-top: 12px;
             box-sizing: border-box;
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.4);
         }
 
         .back-btn {
-            background: #475569;
-            margin-top: 8px;
+            background: #334155;
+            margin-top: 10px;
             width: 100%;
+            box-shadow: none;
         }
 
         .footer-credit {
             text-align: center;
             font-size: 11px;
             color: var(--text-muted);
-            margin-top: 20px;
-            line-height: 1.4;
+            margin-top: 24px;
+            line-height: 1.5;
             width: 100%;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 12px;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- 1. Main Store Screen -->
+        <!-- Main Store Screen -->
         <div id="mainApp">
             <div class="header">
                 <h2>ANGKOR TOP UP<br>GAME STORE</h2>
@@ -361,10 +393,10 @@
             </div>
         </div>
 
-        <!-- 2. Dedicated Game View Screen -->
+        <!-- Dedicated Game View Screen -->
         <div id="gameViewScreen">
             <div class="header">
-                <h2 id="viewGameTitle" style="color: #f59e0b; margin-bottom: 10px;">Top Up</h2>
+                <h2 id="viewGameTitle" style="background: linear-gradient(to right, #fef08a, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 12px;">Top Up</h2>
             </div>
 
             <div class="form-group">
@@ -378,12 +410,10 @@
                 </div>
             </div>
 
-            <!-- Button to confirm and show QR Code -->
             <button class="confirm-pay-btn" onclick="showPaymentQR()">ចុចទីនេះដើម្បីទូទាត់ប្រាក់ (Confirm Payment)</button>
 
-            <!-- Payment Section (Appears after clicking confirm) -->
             <div class="payment-section" id="paymentSection">
-                <div style="font-size: 12px; color: #f59e0b; font-weight: 600; margin-bottom: 4px;">ស្កេន QR Code ដើម្បីទូទាត់ប្រាក់ (ABA)</div>
+                <div style="font-size: 13px; color: #f59e0b; font-weight: 700; margin-bottom: 4px;">ស្កេន QR Code ដើម្បីទូទាត់ប្រាក់ (ABA)</div>
                 <img src="https://cdn.phototourl.com/free/2026-08-22-5ca0fad7-942e-4bdc-826d-0b2fff2dd480.jpg" alt="ABA QR" class="qr-img">
                 
                 <div id="viewOrderSummary" class="order-summary"></div>
@@ -482,7 +512,7 @@
 
             document.getElementById('viewPromoInput').value = '';
             document.getElementById('viewPromoMsg').innerText = '';
-            document.getElementById('paymentSection').style.display = 'none'; // Hide QR until confirm button clicked
+            document.getElementById('paymentSection').style.display = 'none';
         }
 
         function showPaymentQR() {
@@ -500,7 +530,6 @@
             updateViewSummary();
             updateViewTelegramLink();
 
-            // Scroll down to payment section smoothly
             document.getElementById('paymentSection').scrollIntoView({ behavior: 'smooth' });
         }
 
