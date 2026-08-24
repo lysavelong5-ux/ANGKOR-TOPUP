@@ -29,61 +29,17 @@
             margin: 0 auto;
         }
 
-        .app-logo {
-            width: 75px;
-            height: 75px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--primary-color);
-            margin-bottom: 10px;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
-        }
-
-        #authScreen, #gameViewScreen {
+        #mainApp, #gameViewScreen {
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            min-height: 85vh;
-            text-align: center;
-            padding: 10px;
         }
 
         #gameViewScreen {
             display: none;
-            justify-content: flex-start;
-        }
-
-        .welcome-title {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 6px;
-        }
-
-        .welcome-sub {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-
-        .auth-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 24px;
-            border-radius: 20px;
             width: 100%;
-            box-sizing: border-box;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            text-align: left;
         }
 
-        #mainApp {
-            display: none;
-        }
-
-        /* Header Title at Top */
         .header {
             text-align: center;
             margin-bottom: 14px;
@@ -99,7 +55,6 @@
             line-height: 1.2;
         }
 
-        /* Banner Image */
         .banner-img {
             width: 100%;
             height: 160px;
@@ -110,12 +65,12 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
-        /* Game Cards Grid */
         .game-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             margin-bottom: 16px;
+            width: 100%;
         }
 
         .game-card {
@@ -155,7 +110,6 @@
             margin-top: 4px;
         }
 
-        /* Smooth Marquee Banner with Megaphone */
         .marquee-box {
             background: linear-gradient(135deg, #d97706, #b45309);
             color: white;
@@ -217,20 +171,6 @@
             font-family: inherit;
         }
 
-        .submit-btn {
-            width: 100%;
-            padding: 14px;
-            background: var(--primary-color);
-            border: none;
-            color: #1e293b;
-            font-size: 15px;
-            font-weight: 700;
-            border-radius: 12px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-            margin-top: 10px;
-        }
-
         .packages-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -268,6 +208,21 @@
             font-weight: 600;
         }
 
+        /* Confirm Payment Button */
+        .confirm-pay-btn {
+            width: 100%;
+            padding: 13px;
+            background: #f59e0b;
+            border: none;
+            color: #1e293b;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
         .payment-section {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -276,7 +231,7 @@
             width: 100%;
             box-sizing: border-box;
             text-align: center;
-            margin-top: 10px;
+            margin-top: 15px;
             display: none;
         }
 
@@ -356,6 +311,7 @@
         .back-btn {
             background: #475569;
             margin-top: 8px;
+            width: 100%;
         }
 
         .footer-credit {
@@ -371,53 +327,21 @@
 <body>
 
     <div class="container">
-        <!-- 1. Login Screen -->
-        <div id="authScreen">
-            <div>
-                <img src="https://cdn.phototourl.com/free/2026-08-23-b0262a61-7b2f-48a9-9b7b-7eafb116752b.jpg" alt="Logo" class="app-logo">
-                <div class="welcome-title">សូមស្វាគមន៍! 🙏🏻🔥</div>
-                <div class="welcome-sub">ANGKOR TOP UP GAME STORE<br>សូមបញ្ចូល Username និង លេខកូដ (Password) ដើម្បីចូលហាង។</div>
-            </div>
-            
-            <div class="auth-card">
-                <div class="form-group">
-                    <label class="form-label">Username (ឈ្មោះគណនី)</label>
-                    <input type="text" class="input-field" id="loginUser" placeholder="បញ្ចូល Username...">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Password (លេខកូដសម្ងាត់)</label>
-                    <input type="password" class="input-field" id="loginPass" placeholder="បញ្ចូលលេខកូដ...">
-                </div>
-
-                <button class="submit-btn" onclick="handleLogin()">ចូលប្រើប្រាស់ (Login)</button>
-            </div>
-            
-            <div class="footer-credit">
-                Credit : Ly Seav Long<br>2026-2027 @Langmusstoreshop
-            </div>
-        </div>
-
-        <!-- 2. Main Store Screen -->
+        <!-- 1. Main Store Screen -->
         <div id="mainApp">
-            <!-- Header Title -->
             <div class="header">
                 <h2>ANGKOR TOP UP<br>GAME STORE</h2>
             </div>
 
-            <!-- Banner Image -->
             <img src="https://cdn.phototourl.com/free/2026-08-23-87a59eac-beb0-4564-8490-7492626e7c9b.png" alt="Banner" class="banner-img">
 
-            <!-- Game Cards Grid -->
             <div class="game-grid">
-                <!-- Free Fire Card -->
                 <div class="game-card" onclick="openGameView('Free Fire')">
                     <img src="https://cdn.phototourl.com/free/2026-08-23-3b0220f7-585a-467d-8be4-c71c05107c06.jpg" alt="Free Fire" class="game-img">
                     <div style="font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 2px;">Free Fire</div>
                     <button class="topup-btn">TopUp</button>
                 </div>
 
-                <!-- Mobile Legends Card -->
                 <div class="game-card" onclick="openGameView('Mobile Legends')">
                     <img src="https://cdn.phototourl.com/free/2026-08-23-3e9a750a-c02d-4af4-98bd-dace331842b3.jpg" alt="Mobile Legends" class="game-img">
                     <div style="font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 2px;">Mobile</div>
@@ -425,7 +349,6 @@
                 </div>
             </div>
 
-            <!-- Smooth Marquee Banner with Megaphone -->
             <div class="marquee-box">
                 <span style="font-size: 18px;">📢</span>
                 <div class="marquee-container">
@@ -438,7 +361,7 @@
             </div>
         </div>
 
-        <!-- 3. Dedicated Game View Screen -->
+        <!-- 2. Dedicated Game View Screen -->
         <div id="gameViewScreen">
             <div class="header">
                 <h2 id="viewGameTitle" style="color: #f59e0b; margin-bottom: 10px;">Top Up</h2>
@@ -455,6 +378,10 @@
                 </div>
             </div>
 
+            <!-- Button to confirm and show QR Code -->
+            <button class="confirm-pay-btn" onclick="showPaymentQR()">ចុចទីនេះដើម្បីទូទាត់ប្រាក់ (Confirm Payment)</button>
+
+            <!-- Payment Section (Appears after clicking confirm) -->
             <div class="payment-section" id="paymentSection">
                 <div style="font-size: 12px; color: #f59e0b; font-weight: 600; margin-bottom: 4px;">ស្កេន QR Code ដើម្បីទូទាត់ប្រាក់ (ABA)</div>
                 <img src="https://cdn.phototourl.com/free/2026-08-22-5ca0fad7-942e-4bdc-826d-0b2fff2dd480.jpg" alt="ABA QR" class="qr-img">
@@ -487,25 +414,10 @@
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        let loggedUser = "";
         let currentGame = "";
         let selectedPkgName = "";
         let selectedPkgPrice = 0;
         let isFreeCodeApplied = false;
-
-        function handleLogin() {
-            let user = document.getElementById('loginUser').value.trim();
-            let pass = document.getElementById('loginPass').value.trim();
-
-            if(!user || !pass) {
-                alert('សូមបំពេញ Username និង លេខកូដ (Password) ឱ្យបានគ្រប់គ្រាន់!');
-                return;
-            }
-
-            loggedUser = user;
-            document.getElementById('authScreen').style.display = 'none';
-            document.getElementById('mainApp').style.display = 'block';
-        }
 
         const gamePackagesData = {
             "Free Fire": [
@@ -570,10 +482,26 @@
 
             document.getElementById('viewPromoInput').value = '';
             document.getElementById('viewPromoMsg').innerText = '';
-            document.getElementById('paymentSection').style.display = 'block';
+            document.getElementById('paymentSection').style.display = 'none'; // Hide QR until confirm button clicked
+        }
 
+        function showPaymentQR() {
+            let playerId = document.getElementById('viewPlayerId').value.trim();
+            if(!playerId) {
+                alert('សូមបញ្ចូល Player ID របស់អ្នកជាមុនសិន!');
+                return;
+            }
+            if(!selectedPkgName) {
+                alert('សូមជ្រើសរើសកញ្ចប់ពេជ្រជាមុនសិន!');
+                return;
+            }
+
+            document.getElementById('paymentSection').style.display = 'block';
             updateViewSummary();
             updateViewTelegramLink();
+
+            // Scroll down to payment section smoothly
+            document.getElementById('paymentSection').scrollIntoView({ behavior: 'smooth' });
         }
 
         function applyViewPromoCode() {
@@ -604,7 +532,6 @@
             let displayPrice = isFreeCodeApplied ? `<span style="color:#10b981; font-weight:bold;">$0.00 (Free Code)</span>` : `<span style="color:#f59e0b; font-weight:bold;">$${selectedPkgPrice.toFixed(2)}</span>`;
 
             document.getElementById('viewOrderSummary').innerHTML = 
-                `<b>គណនី (User):</b> ${loggedUser}<br>` +
                 `<b>ហ្គេម:</b> ${currentGame}<br>` +
                 `<b>ID:</b> <b>${playerId}</b><br>` +
                 `<b>កញ្ចប់:</b> ${selectedPkgName}<br>` +
@@ -617,19 +544,12 @@
 
             let text = "";
             if(isFreeCodeApplied) {
-                text = encodeURIComponent(`👤 [អតិថិជន: ${loggedUser}]\n🎁 [ទុបអាប់ហ្វ្រី - ANGKOR TOP UP]\n🎮 ហ្គេម: ${currentGame}\n🆔 ID: ${playerId}\n📦 កញ្ចប់: ${selectedPkgName}\n🎟️ កូដ: ${codeUsed} (FREE $0.00)\n🚀 (សូមទុបអាប់ជូនអតិថិជននេះភ្លាមបង!)`);
+                text = encodeURIComponent(`🎁 [ទុបអាប់ហ្វ្រី - ANGKOR TOP UP]\n🎮 ហ្គេម: ${currentGame}\n🆔 ID: ${playerId}\n📦 កញ្ចប់: ${selectedPkgName}\n🎟️ កូដ: ${codeUsed} (FREE $0.00)\n🚀 (សូមទុបអាប់ជូនអតិថិជននេះភ្លាមបង!)`);
             } else {
-                text = encodeURIComponent(`👤 [អតិថិជន: ${loggedUser}]\n🎮 [ទុបអាប់ហ្គេម - ANGKOR TOP UP]\n🎮 ហ្គេម: ${currentGame}\n🆔 ID: ${playerId}\n📦 កញ្ចប់: ${selectedPkgName} ($${selectedPkgPrice.toFixed(2)})\n🧾 (សូមផ្ញើរូប Slip មកទីនេះផងបង!)`);
+                text = encodeURIComponent(`🎮 [ទុបអាប់ហ្គេម - ANGKOR TOP UP]\n🎮 ហ្គេម: ${currentGame}\n🆔 ID: ${playerId}\n📦 កញ្ចប់: ${selectedPkgName} ($${selectedPkgPrice.toFixed(2)})\n🧾 (សូមផ្ញើរូប Slip មកទីនេះផងបង!)`);
             }
             document.getElementById('viewAdminLink').href = `https://t.me/NEAKKROBKRONG?text=${text}`;
         }
-
-        document.getElementById('viewPlayerId').addEventListener('input', () => {
-            if(selectedPkgName) {
-                updateViewSummary();
-                updateViewTelegramLink();
-            }
-        });
 
         function goBackToMain() {
             document.getElementById('gameViewScreen').style.display = 'none';
@@ -638,4 +558,3 @@
     </script>
 </body>
 </html>
-៩៩ោលឦ.  
